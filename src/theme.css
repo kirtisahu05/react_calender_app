@@ -1,0 +1,15 @@
+:root {
+  --default-font: 'Roboto, sans-serif';
+
+  --default-white: #fff;
+  --shade-of-white: #f9f9f9;
+  --background: #F2F6F8;
+  --primary-color: #DD296F;
+  --secondary-color: #b30f51;
+  --button-disable-primary-color: #bdc3c7;
+
+  --logo-text-color: black;
+  --base-text-color: rgba(0, 0, 0, 0.8);
+  --border-color: rgba(0, 0, 0, 0.8);
+  --text-input-border-color: #ddd;
+}

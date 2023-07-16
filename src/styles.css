@@ -1,35 +1,36 @@
-/* General Styles */
-body {
+@import 'theme.css';
+
+.app {
+  /* not able to add Poppins font */
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
+  background-color: var(--shade-of-white);
+  color: var(--base-text-color)
 }
 
 .calendar-app {
-  max-width: 800px;
+  /* as per requirement */
+  max-width: 1240px;
   margin: 0 auto;
-  background-color: #f9f9f9;
+  background-color: var(--shade-of-white);
 }
 .calendar-outer-container {
-  background-color: #f2f6f8;
+  background-color: var(--background);
   padding: 20px 50px;
-  /* box-shadow: inset 0px 0px 20px #ebebeb; */
+  box-shadow: inset 0px 15px 10px -15px #ebebeb;
 }
 .calendar-container {
-  background-color: #f9f9f9;
+  background-color: var(--shade-of-white);
   padding: 20px;
 }
 
-/* Header Styles */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin-bottom: 20px; */
   padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: -0px 4px 16px 0px red;
+  background-color: var(--shade-of-white);
 }
 
 .app-title {
@@ -39,8 +40,8 @@ body {
 }
 
 .add-event-button {
-  background-color: #dd296f;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: var(--default-white);
   border: none;
   padding: 10px 15px;
   font-size: 16px;
@@ -49,7 +50,7 @@ body {
 }
 
 .add-event-button:hover {
-  background-color: #0056b3;
+  background-color: var(--secondary-color);
 }
 
 .month-navigation {
@@ -62,6 +63,7 @@ body {
 }
 
 .arrow-button {
+  color: var(--primary-color);
   background-color: transparent;
   border: none;
   font-size: 24px;
@@ -70,9 +72,11 @@ body {
   margin: 0 10px;
 }
 
-/* Calendar Styles */
+.arrow-button:hover {
+  color: var(--secondary-color);
+}
+
 .calendar {
-  /* display: grid; */
   grid-template-columns: repeat(7, 1fr);
   gap: 10px;
 }
@@ -89,26 +93,20 @@ body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 10px;
+  margin: 10px 0;
 }
 
 .day-container {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: var(--default-white);
+  border: 1px solid var(--text-input-border-color);
   padding: 10px;
-  border-radius: 4px;
-  min-height: 50px;
-  min-width: 50px;
+  /* as per requirement */
+  /* border-radius: 8px; --> this is not matching with given mockups */ 
+  min-height: 80px;
+  min-width: 80px;
 }
-
-/* .day-container {
-  border: 1px solid #ddd;
-  padding: 15px;
-  position: relative;
-  min-height: 25px;
-  min-width: 25px;
-} */
 
 .day-number {
   font-size: 18px;
@@ -120,85 +118,17 @@ body {
 }
 
 .event {
-  background-color: #dd296f;
+  background-color: var(--primary-color);;
   opacity: 80%;
-  padding: 0px 7px;
+  padding: 4px;
   margin-bottom: 5px;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 11px;
-  width: 80%;
+  width: 90%;
   white-space: nowrap;
 }
 
 .event:not(:last-child) {
   margin-bottom: 5px;
-}
-
-/* Modal Styles */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 4px;
-  max-width: 400px;
-  width: 100%;
-}
-
-.modal h3 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.modal form {
-  display: flex;
-  flex-direction: column;
-}
-
-.modal label {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.modal input,
-.modal textarea {
-  margin-bottom: 10px;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal-buttons button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.modal-buttons button:not(:last-child) {
-  margin-right: 10px;
-}
-
-.modal-buttons button:hover {
-  background-color: #0056b3;
 }

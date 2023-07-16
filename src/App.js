@@ -1,5 +1,6 @@
 import "./styles.css";
 import React, { useState, useEffect } from "react";
+import { formatDate } from "./utils";
 
 import {
   AddEventModal,
@@ -13,6 +14,7 @@ export default function App() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [eventForm, setEventForm] = useState({
@@ -56,14 +58,16 @@ export default function App() {
   };
 
   const openAddModal = () => {
-    setEventForm({
-      id: "",
-      date: formatDate(date),
-      time: "",
-      venue: "",
-      notes: "",
-      invites: ""
-    });
+    const defaultState = {
+    id: Date.now().toString(),
+    title: "Meeting...",
+    date: formatDate(date),
+    time: "12:00",
+    venue: "",
+    notes: "",
+    invites: ""
+    }
+    setEventForm(() => defaultState);
     setShowAddModal(true);
   };
 
@@ -72,26 +76,34 @@ export default function App() {
     setShowAddModal(false);
   };
 
-  // // Function to open edit event modal
-  // const openEditModal = (event) => {
-  //   setEventForm(event);
-  //   setShowEditModal(true);
-  // };
+  // Function to open edit event modal
+  const openEditModal = (event) => {
+    setShowViewModal(false)
+    setEventForm(event);
+    setShowEditModal(true);
+  };
 
   // Function to close edit event modal
   const closeEditModal = () => {
     setShowEditModal(false);
   };
 
-  // // Function to open delete event modal
-  // const openDeleteModal = (event) => {
-  //   setEventForm(event);
-  //   setShowDeleteModal(true);
-  // };
+  // Function to close edit event modal
+  const closeViewModal = () => {
+    setShowViewModal(false);
+  };
+
+  // Function to open delete event modal
+  const openDeleteModal = (event) => {
+    setShowViewModal(false)
+    setEventForm(event);
+    setShowDeleteModal(true);
+  };
 
   // Function to close delete event modal
   const closeDeleteModal = () => {
     setShowDeleteModal(false);
+    setSelectedEvent(null);
   };
 
   // Function to add a new event
@@ -124,6 +136,7 @@ export default function App() {
   // Function to handle selection of an event
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
+    setShowViewModal(true);
   };
 
   // Function to handle date change in add/edit event form
@@ -133,14 +146,6 @@ export default function App() {
       ...prevEventForm,
       date: value
     }));
-  };
-
-  // Function to format date as YYYY-MM-DD
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
   };
 
   // Get the first day of the current month
@@ -156,135 +161,109 @@ export default function App() {
   const datesInMonth = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
   return (
-    <div className="calendar-app">
-      <div className="header">
-        <h2 className="app-title">My Calendar</h2>
-        <div className="actions">
-          {/* <h4>{date.toDateString()}</h4> */}
-          <button className="add-event-button" onClick={openAddModal}>
-            Add Event
-          </button>
-        </div>
-      </div>
-      <div className="calendar-outer-container">
-        <div className="calendar-container">
-          <div className="month-navigation">
-            <button
-              className="arrow-button"
-              onClick={() => handleMonthChange(-1)}
-            >
-              &lt;
-            </button>
-            <span className="month-name">
-              {date.toLocaleString("default", { month: "long" })}{" "}
-              {date.getFullYear()}
-            </span>
-            <button
-              className="arrow-button"
-              onClick={() => handleMonthChange(1)}
-            >
-              &gt;
+    < div className="app">
+      <div className="calendar-app">
+        <div className="header">
+          <h2 className="app-title">My Calendar</h2>
+          <div className="actions">
+            <button className="add-event-button" onClick={openAddModal}>
+              Add Event
             </button>
           </div>
-          <div className="calendar">
-            <div className="weekdays">
-              <span>Sun</span>
-              <span>Mon</span>
-              <span>Tue</span>
-              <span>Wed</span>
-              <span>Thu</span>
-              <span>Fri</span>
-              <span>Sat</span>
+        </div>
+        <div className="calendar-outer-container">
+          <div className="calendar-container">
+            <div className="month-navigation">
+              <button
+                className="arrow-button"
+                onClick={() => handleMonthChange(-1)}
+              >
+                &lt;
+              </button>
+              <span className="month-name">
+                {date.toLocaleString("default", { month: "long" })}{" "}
+                {date.getFullYear()}
+              </span>
+              <button
+                className="arrow-button"
+                onClick={() => handleMonthChange(1)}
+              >
+                &gt;
+              </button>
             </div>
-            <div className="dates">
-              {[...Array(firstDayOfMonth)].map((_, index) => (
-                <div key={`blank-${index}`} className="blank"></div>
-              ))}
-              {datesInMonth.map((day) => {
-                const currentDate = new Date(
-                  date.getFullYear(),
-                  date.getMonth(),
-                  day
-                );
-                const formattedDate = formatDate(currentDate);
-                const eventsForDay = events.filter(
-                  (event) => event.date === formattedDate
-                );
-
-                return (
-                  <div key={day} className="day-container">
-                    <div className="day-number">{day}</div>
-                    <div className="event-container">
-                      {eventsForDay.map((event) => (
-                        <div
-                          key={event.id}
-                          className="event"
-                          onClick={() => handleEventSelect(event)}
-                        >
-                          {event.title}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            {/* {datesInMonth.map((day) => {
-            const currentDate = new Date(
-              date.getFullYear(),
-              date.getMonth(),
-              day
-            );
-            const formattedDate = formatDate(currentDate);
-            const eventsForDay = events.filter(
-              (event) => event.date === formattedDate
-            );
-
-            return (
-              <div key={day} className="day-container">
-                <div className="day-number">{day}</div>
-                <div className="event-container">
-                  {eventsForDay.map((event) => (
-                    <div
-                      key={event.id}
-                      className="event"
-                      onClick={() => handleEventSelect(event)}
-                    >
-                      {event.title}
-                    </div>
-                  ))}
-                </div>
+            <div className="calendar">
+              <div className="weekdays">
+                <span>Sun</span>
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
               </div>
-            );
-          })} */}
+              <div className="dates">
+                {[...Array(firstDayOfMonth)].map((_, index) => (
+                  <div key={`blank-${index}`} className="blank"></div>
+                ))}
+                {datesInMonth.map((day) => {
+                  const currentDate = new Date(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    day
+                  );
+                  const formattedDate = formatDate(currentDate);
+                  const eventsForDay = events.filter(
+                    (event) => event.date === formattedDate
+                  );
+
+                  return (
+                    <div key={day} className="day-container">
+                      <div className="day-number">{day}</div>
+                      <div className="event-container">
+                        {eventsForDay.map((event) => (
+                          <div
+                            key={event.id}
+                            className="event"
+                            onClick={() => handleEventSelect(event)}
+                          >
+                            {event.title.length > 15 ? event.title.slice(0, 15)+'...' : event.title}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
+        <AddEventModal
+          showAddModal={showAddModal}
+          eventForm={eventForm}
+          addEvent={addEvent}
+          handleDateChange={handleDateChange}
+          closeAddModal={closeAddModal}
+        />
+        <DeleteEventModal
+          showDeleteModal={showDeleteModal}
+          deleteEvent={deleteEvent}
+          closeDeleteModal={closeDeleteModal}
+        />
+        <EditEventModal
+          showEditModal={showEditModal}
+          eventForm={eventForm}
+          updateEvent={updateEvent}
+          handleDateChange={handleDateChange}
+          closeEditModal={closeEditModal}
+        />
+        <ViewEventModal
+          showViewModal={showViewModal}
+          selectedEvent={selectedEvent}
+          closeViewModal={closeViewModal}
+          openEditModal={openEditModal}
+          openDeleteModal={openDeleteModal}
+        />
       </div>
-      <AddEventModal
-        showAddModal={showAddModal}
-        eventForm={eventForm}
-        addEvent={addEvent}
-        handleDateChange={handleDateChange}
-        closeAddModal={closeAddModal}
-      />
-      <DeleteEventModal
-        showDeleteModal={showDeleteModal}
-        deleteEvent={deleteEvent}
-        closeDeleteModal={closeDeleteModal}
-      />
-      <EditEventModal
-        showEditModal={showEditModal}
-        eventForm={eventForm}
-        updateEvent={updateEvent}
-        handleDateChange={handleDateChange}
-        closeEditModal={closeEditModal}
-      />
-      <ViewEventModal
-        selectedEvent={selectedEvent}
-        setEventForm={setEventForm}
-        setShowEditModal={setShowEditModal}
-        setShowDeleteModal={setShowDeleteModal}
-      />
     </div>
   );
 }
