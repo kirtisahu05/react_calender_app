@@ -1,0 +1,204 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.calendar-app {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+}
+.calendar-outer-container {
+  background-color: #f2f6f8;
+  padding: 20px 50px;
+  /* box-shadow: inset 0px 0px 20px #ebebeb; */
+}
+.calendar-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px; */
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: -0px 4px 16px 0px red;
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.add-event-button {
+  background-color: #dd296f;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.add-event-button:hover {
+  background-color: #0056b3;
+}
+
+.month-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.arrow-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 10px;
+}
+
+/* Calendar Styles */
+.calendar {
+  /* display: grid; */
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.day-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  min-height: 50px;
+  min-width: 50px;
+}
+
+/* .day-container {
+  border: 1px solid #ddd;
+  padding: 15px;
+  position: relative;
+  min-height: 25px;
+  min-width: 25px;
+} */
+
+.day-number {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.blank {
+  height: 50px; /* Adjust the height as needed */
+}
+
+.event {
+  background-color: #dd296f;
+  opacity: 80%;
+  padding: 0px 7px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 11px;
+  width: 80%;
+  white-space: nowrap;
+}
+
+.event:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.modal input,
+.modal textarea {
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.modal-buttons button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.modal-buttons button:hover {
+  background-color: #0056b3;
+}
